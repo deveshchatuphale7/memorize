@@ -1,1 +1,62 @@
-<p>auth works!</p>
+<div nz-row>
+    <div nz-col nzSpan="12" nzOffset="6" style="display: flex;flex-direction: row;justify-content: center;">
+        <div style="width: 300px;border: 1px solid #c7c7c7;padding: 15px;border-radius: 15px;"> 
+        <form *ngIf="viewLoginFlag" nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="submitForm('login')">
+            <h2>Sign In</h2>
+            <nz-form-item>
+              <nz-form-control nzErrorTip="Please input your email!">
+                <nz-input-group nzPrefixIcon="user">
+                  <input type="text" nz-input formControlName="email" placeholder="Email" />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-control nzErrorTip="Please input your Password!">
+                <nz-input-group nzPrefixIcon="lock">
+                  <input type="password" nz-input formControlName="password" placeholder="Password" />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+            <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Log in</button>
+            Or
+            <a (click)="viewLoginFlag = !viewLoginFlag">Register now!</a>
+          </form>
+
+          <form *ngIf="!viewLoginFlag" nz-form [formGroup]="signupForm" class="login-form" (ngSubmit)="submitForm('signup')">
+                <h2>Sign up</h2>
+            <nz-form-item>
+              <nz-form-control nzErrorTip="Please input your Name">
+                <nz-input-group nzPrefixIcon="user">
+                  <input type="text" nz-input formControlName="name" placeholder="Name" />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+          <nz-form-item>
+              <nz-form-control nzErrorTip="Please input your Email">
+                <nz-input-group nzPrefixIcon="user">
+                  <input type="text" nz-input formControlName="email" placeholder="Email" />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-control nzErrorTip="Please input your Password">
+                <nz-input-group nzPrefixIcon="lock">
+                  <input type="password" nz-input formControlName="password" placeholder="Password" />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Confirm your Password">
+                  <nz-input-group nzPrefixIcon="lock">
+                    <input type="password" nz-input formControlName="cnfpassword" placeholder="Confirm Password" />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Sign up</button>
+            <a (click)="viewLoginFlag = !viewLoginFlag">Back to login</a>
+          </form>
+    
+        </div>
+    </div>
+  </div>
+

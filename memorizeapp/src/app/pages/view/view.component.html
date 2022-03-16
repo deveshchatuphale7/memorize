@@ -1,1 +1,31 @@
-<p>view works!</p>
+<div style="background: #ECECEC;padding:30px;">
+    <div nz-row [nzGutter]="8">
+      <div style="background-color: white;margin-left: 7px;margin-right: 8px;" nz-col [nzSpan]="8" *ngFor="let data of allChartData;let ind=index">
+        <nz-card nzTitle="{{data[2]}}">
+            <div style="margin:5px 0px 5px 5px; display: flex;flex-direction: row;justify-content: space-between;align-items: baseline;">
+                <h2><b>{{data[2]}}</b></h2>
+                <i nz-icon nzType="fullscreen" nzTheme="outline" (click)="viewFullscreen(ind)"></i>
+            </div>
+            
+         <div id="mychart{{ind}}" style="margin:auto;width: 275px;height: 200px;"></div>
+        </nz-card>
+      </div>
+      
+    </div>
+  </div>
+
+  <nz-modal [(nzVisible)]="isVisible" nzWidth="700" nzTitle="" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        <div nz-row>
+          <div nz-col nzSpan="12" nzOffset="6">
+              <h1 style="margin: auto;">{{selectedTitle}}</h1>        
+          </div>      
+      </div>
+      <div nz-row>
+          <div  nz-col nzSpan="12" nzOffset="6">
+            <div id="mychart" style="margin: auto; width: 650px;height: 420px;"> </div>
+        </div>      
+      </div>
+    </ng-container>
+  </nz-modal>
+  
