@@ -22,10 +22,15 @@ export class AuthComponent implements OnInit {
       if(res.msg.length && res.msg[0] == this.loginForm.value.email){
         // this.common.createNotification("info","Login Successful !","Welcome !");
         setTimeout(() => {
-          // this.common.loginEmail = res.data[0].email; 
-          // this.common.loginFlag = true;
+           this.common.loginEmail = this.loginForm.value.email; 
+           this.common.loginFlag = true;
           localStorage.setItem("email",this.loginForm.value.email);
-          this.router.navigate(["/main/create"]);  
+          this.common.createNotification("info","Hey there !","Welcome !")
+
+setTimeout(() => {
+  this.router.navigate(["/main/create"]);
+}, 200);
+            
           
         }, 500);
       }
@@ -33,7 +38,7 @@ export class AuthComponent implements OnInit {
     }else if(param == "signup"){
       this.common.httpPost("/signup",this.signupForm.value).subscribe((res:any)=>{
 
-      
+        this.common.createNotification("info","Thank you for signing up"," You can Signin now");
         // this.common.createNotification("info","Signup Successful !","Please Login");
         setTimeout(() => {
           this.viewLoginFlag = true;

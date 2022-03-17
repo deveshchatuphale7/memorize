@@ -1,8 +1,27 @@
 <nz-layout class="app-layout">
   <nz-layout>
-    <nz-header >
-      <p style="color: bisque;font-size: 20px;margin-left: 5px;">Memorize</p>     
-    </nz-header>
+
+    <nz-header>
+      <!-- <div class="logo"> <h1>Alekha</h1> </div>  -->
+      <div style=" width: 50px;width: 50px;height: 50px;color: mediumslateblue;float: left;margin-left: 10px;font-size: 36px;padding-right: 10px;">Memorize</div>
+      <div *ngIf="common.loginFlag == true" style="width: 300px;float: right;">  <nz-avatar [nzSize]="32" [nzIcon]="'user'"></nz-avatar>  <span style="padding-left: 3px;padding-right: 3px;">{{common.loginEmail}}</span> <button style="margin-left: 5px;margin-right: 5px;" nz-button nzType="default" (click)="logout()" nzDanger> Log Out </button></div>
+
+      <ul *ngIf="common.loginFlag == true" style="margin-left: 170px;" nz-menu [nzTheme]="'light'"  nzMode="horizontal">
+       <li nz-menu-item > <a routerLink="main/create">Create</a></li>
+       <li nz-menu-item><a routerLink="main/view">View</a></li>
+       <!-- <li nz-menu-item><a routerLink="main/about">About</a></li> -->
+     </ul>
+
+   </nz-header>
+<!--
+    <nz-header>
+      <div class="logo"><p style="color: bisque;font-size: 20px;margin-left: 10px;">Memorize</p>
+      </div>
+      <ul nz-menu nzMode="horizontal">
+        <li nz-menu-item>Create</li>
+        <li nz-menu-item>View</li>
+      </ul>
+    </nz-header> -->
     <nz-content>
       <div class="inner-content">
         <router-outlet></router-outlet>

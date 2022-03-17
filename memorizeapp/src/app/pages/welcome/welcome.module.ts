@@ -20,14 +20,17 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 
 
 @NgModule({
   imports: [CommonModule,WelcomeRoutingModule,NzGridModule,FormsModule,ReactiveFormsModule,
     NzButtonModule,NzInputModule,NzSelectModule,NzModalModule,
     NzLayoutModule,
-    NzMenuModule,
-    NzFormModule,NzTagModule,NzCardModule],
+    NzMenuModule,NzSpinModule,
+    NzFormModule,NzTagModule,NzCardModule,NzIconModule,NzNotificationModule],
   declarations: [WelcomeComponent,HomeComponent,CreateComponent,ViewComponent],
   exports: [WelcomeComponent,HomeComponent,CreateComponent]
 })

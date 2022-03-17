@@ -23,10 +23,10 @@ with open('GeneratedToken(1)') as csvDataFile:
     csvReader = list(csv.reader(csvDataFile))
     # print(csvReader)
     tempdata = csvReader[1]
-    print(tempdata)
+    # print(tempdata)
     clientID = tempdata[0]
     clientSecret = tempdata[1]
-    print(clientID,clientSecret)
+    # print(clientID,clientSecret)
 
     auth_provider = PlainTextAuthProvider(clientID, clientSecret)
     cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
@@ -55,15 +55,14 @@ def signup():
     pwd = reqData["password"]
     name = reqData["name"]
     # pwd = str(bcrypt.generate_password_hash(pwd))
-    print(email)
-    print(name)
-    print(pwd)
+    # print(email)
+    # print(name)
+    # print(pwd)
     # print(pwd.split("'"))
     q = "INSERT INTO memorize_key.auth (email,name,password) VALUES ('{email}' , '{name}' , '{pwd}');".format(email = email,name = name,pwd = pwd)
-    # print("INSERT INTO memorize_key.auth (email,name,password) VALUES ('" + email+"','" + name + '","' + pwd +"');")
-    print(q)
+    # print(q)
     row = session.execute(q)
-    print(row)
+    # print(row)
     return Response(json.dumps({"msg": "Success"}), status=200, mimetype='application/json')
 
 
@@ -72,14 +71,13 @@ def login():
     reqData = request.get_json(force=True)
     email = reqData["email"]
     pwd = reqData["password"]
-    
     q = "SELECT email FROM memorize_key.auth WHERE email='{email}' AND password='{pwd}' ALLOW FILTERING".format(email = email,pwd = pwd)
     try:
         row = session.execute(q)
     except:
         return Response(json.dumps({"msg": "not found"}), status=200, mimetype='application/json')        
-    print(row)
-    print()
+    # print(row)
+    # print()
     # pwd=bcrypt.generate_password_hash(pwd)
     # print(pwd)
     # print(type(pwd))
@@ -99,7 +97,7 @@ def saveMap():
     # text = text[:5]+"..."
     metaData = reqData["metaData"]
     q = "INSERT INTO memorize_key.map (id,email,title,text,metaData) VALUES ({id} , '{email}', '{title}' , '{text}','{metaData}');".format(id = id,email = email,title = title,text = text,metaData=metaData)
-    print(q)
+    # print(q)
     try:
         row = session.execute(q)
         # print(row)
@@ -107,7 +105,7 @@ def saveMap():
         print(e) 
         #print(row)
         return Response(json.dumps({"msg": "not found"}), status=200, mimetype='application/json')        
-    print(row)
+    # print(row)
     return Response(json.dumps({"msg": "success"}), status=200, mimetype='application/json')
 
 @app.route("/getallmaps",methods=["POST"])
@@ -120,9 +118,9 @@ def getMap():
         row = session.execute(q)
     except:
         return Response(json.dumps({"msg": "err"}), status=200, mimetype='application/json')        
-    print(row)
-    print(dir(row))
-    print(type(row))
+    # print(row)
+    # print(dir(row))
+    # print(type(row))
     rd = list()
     for o in row:
         rd.append(o)
@@ -136,18 +134,15 @@ def generateMap():
     # language = request.args.get("language")
     reqData = request.get_json(force=True)
     text = reqData["text"]
-    print("text")
-    print(text)
+    # print("text")
+    # print(text)
     stopWords = stopwords.words('english')
     r = Rake(min_length=1,max_length=3,stopwords=stopWords) 
     r.extract_keywords_from_text(text)
     kp = r.get_ranked_phrases_with_scores()
-    
     return Response(json.dumps({"keyphrase_data": kp[:100]}), status=200, mimetype='application/json')
 
 
-# if __name__ == "__main__":
-    # app.run()    
 
 # CREATE TABLE cycling.cyclist_alt_stats ( id UUID PRIMARY KEY, lastname text, birthday timestamp, nationality text, weight text, height text );
 # CREATE TABLE memorize_key.auth ( email text PRIMARY KEY, name text, password text);

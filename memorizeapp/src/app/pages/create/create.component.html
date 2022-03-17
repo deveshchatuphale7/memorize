@@ -1,18 +1,18 @@
 
-<h1> Hey, <br>Lets Create a fresh memory map for you !</h1>
+<h1> Hey, <br>Lets Create a fresh mind map for you !</h1>
 
 
 <h3 style="margin-top: 15px;">Lets get started ! </h3>
 <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
     <nz-form-item>
       <nz-form-label [nzSpan]="7" nzRequired>Enter Title </nz-form-label>
-      <nz-form-control [nzSpan]="12" nzValidatingTip="Validating...">
+      <nz-form-control [nzSpan]="12" nzValidatingTip="Validating..." nzErrorTip="Kindly enter the title">
         <input nz-input formControlName="title" placeholder="Title" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzSpan]="7" nzRequired>Enter Text</nz-form-label>
-      <nz-form-control [nzSpan]="12">
+      <nz-form-control [nzSpan]="12" nzErrorTip="Something is wrong here">
         <!-- <input nz-input formControlName="text" placeholder="text" /> -->
         <textarea
         formControlName="text"
@@ -45,7 +45,7 @@
   </form>
 
 <!-- <button (click)="clickB()"> click </button> -->
-  <nz-modal [(nzVisible)]="showModal" [nzStyle]="obj" nzTitle="Your Memory map is ready !" nzOkText="Save" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <nz-modal [(nzVisible)]="showModal" [nzStyle]="obj" nzTitle="Your mind map is ready !" nzOkText="Save" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
    <!-- <div id="chart" style="width: 70%;height: 350px;margin: auto;"></div> -->
    <ng-container *nzModalContent>
     <div nz-row>
@@ -60,3 +60,5 @@
   </div>
 </ng-container>
   </nz-modal>
+
+  <nz-spin style="margin-top: -15%;margin-left: 50%;" *ngIf="showLoader == true" nzSimple [nzSize]="'large'"></nz-spin>

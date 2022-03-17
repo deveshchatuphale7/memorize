@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { CommonService } from 'src/app/common.service';
 import * as echarts from 'echarts';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
@@ -11,6 +13,7 @@ export class CreateComponent implements OnInit {
 
   validateForm:FormGroup;
   showModal:boolean = false;
+  showLoader:boolean = false;
   mapData:any = [];
   chartChildren :any = [];
   submitForm(): void {
@@ -22,8 +25,9 @@ export class CreateComponent implements OnInit {
        this.validateForm.value.text = this.validateForm.value.text.replaceAll("'","");
        this.validateForm.value.text = this.validateForm.value.text.replaceAll('"','')  
        this.validateForm.value.text = this.validateForm.value.text.replaceAll(',',' ')  
-
+       this.showLoader = true;
       this.common.httpPost("/getmap",this.validateForm.value).subscribe((res:any)=>{
+        this.showLoader = false;
         console.log("res ")
         console.log(res)
         this.mapData = res.keyphrase_data.slice(0,8);
@@ -67,11 +71,19 @@ createChart():void{
           // [{name:"output 1"},{name:"output 2"},{name:"output 3"},{name:"output 4"},{name:"output 5"},{name:"output 6"}]
           this.chartChildren
         }],
+        lineStyle:{
+          width:3,
+           curveness:0
+        },
+        
+       label:{
+         rotate:0,
+       },
         top: '18%',
         bottom: '14%',
         layout: 'radial',
         symbol: 'emptyCircle',
-        symbolSize: 7,
+        symbolSize: 18,
         initialTreeDepth: 3,
         animationDurationUpdate: 750,
         emphasis: {
@@ -111,28 +123,40 @@ handleOk():void{
   metaObj["tags"] = [];
   metaObj["createdOn"] = new Date();
   sendObj["metaData"] = JSON.stringify(metaObj);
-
+  this.showLoader = true;
   this.common.httpPost("/savemap",sendObj).subscribe((res:any)=>{
+    this.showLoader = false;
         console.log("res savemap ")
         console.log(res)
+        this.common.createNotification("info","One less thing to remember :)","Your map has been saved !");
         if(res.msg != "err"){
           this.showModal = false;
+          this.validateForm.reset();
         }
       });
 
 }
 obj={'width':"80%"}
 
-  constructor(private fb: FormBuilder,private common: CommonService) {
+  constructor(private fb: FormBuilder,private common: CommonService,private router: Router) {
     this.validateForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(6)]],
       language: ['en', []],
-      text: ['', [Validators.required]],
+      text: ['', [Validators.required,Validators.minLength(50)]],
+      tags:[[],[]]
     });
 
    }
 
   ngOnInit(): void {
+    if(localStorage.getItem("email")){
+      this.common.loginFlag = true;
+    }else{
+      this.router.navigate(["/auth"]);  
+
+    }
+
+
   }
 
 }
